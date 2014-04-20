@@ -82,7 +82,9 @@ cat("Merging Tasks\n");flush.console()
 task <- 1:nrow(as)
 as_merged <- NULL
 
-while(length(task) > 1){
+while(length(task) > 0){
+  cat( task, rownames(as), "\n")
+ if( task[1] %in% 1:(length((as))/nrow(data)) ){
  out= as[task[1] ,]
  as_merged=rbind(as_merged, out)
  rownames(as_merged)[nrow(as_merged)]= rownames(as)[task[1]]
@@ -102,13 +104,15 @@ while(length(task) > 1){
     cat("Removed", which(un == 0) ,"seeds, done!\n");flush.console()
     next
   }
-
+  }else{
+    task=NULL
+  } #End of if
 } #End of while
 
-if( length(as)==ncol(as_merged)  ){
-    as_merged=rbind(as_merged, as)
-    rownames(as_merged)[nrow(as_merged)]=names(as)[1]
-  }
+#if( length(as)==ncol(as_merged)  ){
+#    as_merged=rbind(as_merged, as)
+#    rownames(as_merged)[nrow(as_merged)]=names(as)[1]
+#  }
 
 
   if(!is.null(as_merged)){

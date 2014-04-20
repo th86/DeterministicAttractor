@@ -39,13 +39,8 @@ gc()
 task <- 1:nrow(x)
 as_merged <- NULL
 
-while(length(task) > 1){
-
-    if(task[1]>length(task)) {
-      task=NULL
-      next      
-    }
-
+while(length(task) > 0){
+ if( task[1] %in% 1:(length((as))/nrow(data)) ){
     out= x[task[1] ,]
     as_merged=rbind(as_merged, out)
     rownames(as_merged)[nrow(as_merged)]= rownames(x)[task[1]]
@@ -66,7 +61,9 @@ while(length(task) > 1){
     cat("Removed", which(un == 0) ,"seeds, done!\n");flush.console()
     next
   }
-
+  }else{
+    task=NULL
+  } #End of if
 } #End of while
 
 if( length(as)==ncol(as_merged)  ){
