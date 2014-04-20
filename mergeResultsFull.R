@@ -39,7 +39,7 @@ gc()
 task <- 1:nrow(x)
 as_merged <- NULL
 
-while(length(task) > 0){
+while(length(task) > 1){
 
     if(task[1]>length(task)) {
       task=NULL
@@ -68,6 +68,11 @@ while(length(task) > 0){
   }
 
 } #End of while
+
+if( length(as)==ncol(as_merged)  ){
+    as_merged=rbind(as_merged, as)
+    rownames(as_merged)[nrow(as_merged)]=names(as)[1]
+  }
 
 
 strength = apply(as_merged, 1, function(xx){sort(xx, decreasing=T)[10]})

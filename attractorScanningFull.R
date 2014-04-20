@@ -1,6 +1,3 @@
-# Revised by Tai-Hsien Ou Yang for deterministic results
-# 2014.04.17
-
 library("cafr")
 CAFrun <- function(data, vec, a=5, maxIter = 100, epsilon=1E-14, bin = 6, so = 3,rankBased = FALSE,  negateMI = TRUE, verbose=TRUE, sorting=TRUE){
   m <- nrow(data)
@@ -85,14 +82,10 @@ cat("Merging Tasks\n");flush.console()
 task <- 1:nrow(as)
 as_merged <- NULL
 
-while(length(task) > 0){
+while(length(task) > 1){
  out= as[task[1] ,]
  as_merged=rbind(as_merged, out)
  rownames(as_merged)[nrow(as_merged)]= rownames(as)[task[1]]
-
-
-
-
 
   #find the rows with distance to row-in-focus larger than the threshold 
   un <- apply(as, 1, function(x){ 
@@ -112,6 +105,11 @@ while(length(task) > 0){
 
 } #End of while
 
+if( length(as)==ncol(as_merged)  ){
+    as_merged=rbind(as_merged, as)
+    rownames(as_merged)[nrow(as_merged)]=names(as)[1]
+  }
+
 
   if(!is.null(as_merged)){
     colnames(as_merged) <- rownames(data)  #May cause NA here if column number changes because of identical values
@@ -121,7 +119,6 @@ strength = apply(as_merged, 1, function(xx){sort(xx, decreasing=T)[10]})
 as_merged = as_merged[order(strength, decreasing=T),]
 cat(nrow(as_merged), "attractors in total.\n\n")
 x<-as_merged
-
 
   return (as_merged)
 }
