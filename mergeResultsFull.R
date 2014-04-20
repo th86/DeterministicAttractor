@@ -40,8 +40,8 @@ task <- 1:nrow(x)
 as_merged <- NULL
 
 while(length(task) > 0){
- if( task[1] %in% 1:(length((as))/nrow(data)) ){
-    out= x[task[1] ,]
+if(  (length((as))/nrow(data)) > 1){
+    out= x[1 ,]
     as_merged=rbind(as_merged, out)
     rownames(as_merged)[nrow(as_merged)]= rownames(x)[task[1]]
   
@@ -63,6 +63,8 @@ while(length(task) > 0){
   }
   }else{
     task=NULL
+    as_merged=rbind(as_merged, as)
+    rownames(as_merged)[nrow(as_merged)]= names(as)[which.max(as)]
   } #End of if
 } #End of while
 

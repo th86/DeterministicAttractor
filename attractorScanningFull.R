@@ -83,11 +83,11 @@ task <- 1:nrow(as)
 as_merged <- NULL
 
 while(length(task) > 0){
-  cat( task, rownames(as), "\n")
- if( task[1] %in% 1:(length((as))/nrow(data)) ){
- out= as[task[1] ,]
+  #cat( task, rownames(as), "\n")
+ if(  (length((as))/nrow(data)) > 1){
+ out= as[ 1 ,]
  as_merged=rbind(as_merged, out)
- rownames(as_merged)[nrow(as_merged)]= rownames(as)[task[1]]
+ rownames(as_merged)[nrow(as_merged)]= rownames(as)[1]
 
   #find the rows with distance to row-in-focus larger than the threshold 
   un <- apply(as, 1, function(x){ 
@@ -101,11 +101,13 @@ while(length(task) > 0){
     #cat(nrow(as),"\n")
     as<-as[ task ,]
 
-    cat("Removed", which(un == 0) ,"seeds, done!\n");flush.console()
+    cat("Removed seeds", which(un == 0) ,", done!\n");flush.console()
     next
   }
   }else{
     task=NULL
+    as_merged=rbind(as_merged, as)
+    rownames(as_merged)[nrow(as_merged)]= names(as)[which.max(as)]
   } #End of if
 } #End of while
 
