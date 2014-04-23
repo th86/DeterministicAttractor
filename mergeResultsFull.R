@@ -40,12 +40,11 @@ task <- 1:nrow(x)
 as_merged <- NULL
 
 while(length(task) > 0){
-if(  (length((as))/nrow(data)) > 1){
+if(  (length(x)/ncol(as)) > 1){
     out= x[1 ,]
     as_merged=rbind(as_merged, out)
     rownames(as_merged)[nrow(as_merged)]= rownames(x)[task[1]]
   
-
   #find the rows with distance to row-in-focus larger than the threshold 
   un <- apply(x, 1, function(xx){ 
           max(abs(xx - out)) > 1E-4
@@ -55,24 +54,15 @@ if(  (length((as))/nrow(data)) > 1){
   if(prod(un) == 0){ 
     task <- setdiff(1:nrow(x), which(un == 0) )
     x<-x[ task ,]
-
-
-
     cat("Removed", which(un == 0) ,"seeds, done!\n");flush.console()
     next
   }
   }else{
     task=NULL
-    as_merged=rbind(as_merged, as)
-    rownames(as_merged)[nrow(as_merged)]= names(as)[which.max(as)]
+    as_merged=rbind(as_merged, x)
+    rownames(as_merged)[nrow(as_merged)]= names(x)[which.max(x)]
   } #End of if
 } #End of while
-
-if( length(as)==ncol(as_merged)  ){
-    as_merged=rbind(as_merged, as)
-    rownames(as_merged)[nrow(as_merged)]=names(as)[1]
-  }
-
 
 strength = apply(as_merged, 1, function(xx){sort(xx, decreasing=T)[10]})
 as_merged = as_merged[order(strength, decreasing=T),]
