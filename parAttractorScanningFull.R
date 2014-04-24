@@ -37,7 +37,7 @@ parAttractorScanningFull <- function(data, taskList=list(1:nrow(data)), wid=1,  
 
     ##remove non-converged seeds
     if(is.null(out)){
-      if(verbose) {cat("not converged.\n");flush.console()}
+      #if(verbose) {cat("not converged.\n");flush.console()}
       task <- task[-1] #will affect i as well
       next
     }

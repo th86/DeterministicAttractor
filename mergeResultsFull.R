@@ -6,7 +6,7 @@
 # arguments for script:
 #	args[1] : directory of the results (contains exclusively the .rda files)
 # Example
-# > Rscript mergeResults.R resultDir/
+# > Rscript mergeResultsFull.R resultDir/
 #
 #
 
