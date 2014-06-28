@@ -1,3 +1,5 @@
+#Tai-Hsien Ou Yang
+#Based on Weiyi-Cheng's cafr
 library("cafr")
 CAFrun <- function(data, vec, a=5, maxIter = 100, epsilon=1E-14, bin = 6, so = 3,rankBased = FALSE,  negateMI = TRUE, verbose=TRUE, sorting=TRUE){
   m <- nrow(data)
